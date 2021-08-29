@@ -1,16 +1,16 @@
-FROM ubuntu:xenial
+FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND noninteractive
 
 USER root
 
-RUN apt-get update && apt-get install -y python3-pip python3-dev python-virtualenv \
+RUN apt-get update && apt-get install -y python3-pip python3-dev python3-virtualenv \
     bzip2 g++ git sudo vim wget net-tools locales bzip2 \
     xfce4-terminal software-properties-common python-numpy \
     supervisor xrdp htop ssh
 
 # Browsers
 RUN rm /usr/share/xfce4/helpers/debian-sensible-browser.desktop && \
-    add-apt-repository --yes ppa:jonathonf/firefox-esr && apt-get update && \
+    add-apt-repository --yes ppa:mozillateam/ppa && apt-get update && \
     apt-get remove -y --purge firefox && apt-get install -y firefox-esr
 
 RUN apt-get install -y chromium-browser chromium-browser-l10n chromium-codecs-ffmpeg && \
@@ -24,8 +24,8 @@ RUN apt-get purge -y pm-utils xscreensaver*
 RUN sed -i '/TerminalServerUsers/d' /etc/xrdp/sesman.ini && \
     sed -i '/TerminalServerAdmins/d' /etc/xrdp/sesman.ini
 
-# Some gui applications for users
-RUN apt-get install -y gedit libreoffice nautilus mirage
+# Some gui applications for users  # mirage
+RUN apt-get install -y gedit libreoffice nautilus
 
 # Create user
 ENV USER orange
@@ -41,9 +41,9 @@ USER $USER
 WORKDIR ${HOME}
 
 # Install orange
-RUN wget -q -O anaconda.sh https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_64.sh
+RUN wget -c -O anaconda.sh https://repo.anaconda.com/archive/Anaconda3-2021.05-Linux-x86_64.sh
 RUN bash anaconda.sh -b -p ~/.conda && rm anaconda.sh
-RUN $CONDA_DIR/bin/conda create python=3.6 --name orange3
+RUN $CONDA_DIR/bin/conda create python=3.9 --name orange3
 RUN $CONDA_DIR/bin/conda config --add channels conda-forge
 RUN bash -c "source $CONDA_DIR/bin/activate orange3 && $CONDA_DIR/bin/conda install orange3"
 RUN echo 'export PATH=~/.conda/bin:$PATH' >> /home/orange/.bashrc
