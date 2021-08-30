@@ -59,7 +59,7 @@ ADD ./config/xfce4 .config/xfce4
 ADD ./install/chromium-wrapper install/chromium-wrapper
 
 USER root
-c=57LT^2;PwRE1@1A4TJh8P%zw&M8j_*
+
 # Autostart Xrdp
 ADD ./etc/supervisor/conf.d/xrdp.conf /etc/supervisor/conf.d/xrdp.conf
 RUN xrdp-keygen xrdp auto
