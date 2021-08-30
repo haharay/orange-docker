@@ -47,7 +47,10 @@ RUN $CONDA_DIR/bin/conda create python=3.9 --name orange3
 RUN $CONDA_DIR/bin/conda config --add channels conda-forge
 RUN bash -c "source $CONDA_DIR/bin/activate orange3 && $CONDA_DIR/bin/conda install orange3"
 RUN echo 'export PATH=~/.conda/bin:$PATH' >> /home/orange/.bashrc
+RUN bash -c "source $CONDA_DIR/bin/activate orange3 && pip config set global.index-url https://pypi.doubanio.com/simple"
 RUN bash -c "source $CONDA_DIR/bin/activate orange3 && pip install Orange3-Text Orange3-ImageAnalytics Orange3-Network Orange-Bioinformatics"
+RUN bash -c "source $CONDA_DIR/bin/activate orange3 && pip install pycaret[full]"
+RUN bash -c "source $CONDA_DIR/bin/activate orange3 && pip install jieba"
 
 # Icons and XFCE config
 ADD ./icons/orange.png .conda/share/orange3/orange.png
@@ -56,7 +59,7 @@ ADD ./config/xfce4 .config/xfce4
 ADD ./install/chromium-wrapper install/chromium-wrapper
 
 USER root
-
+c=57LT^2;PwRE1@1A4TJh8P%zw&M8j_*
 # Autostart Xrdp
 ADD ./etc/supervisor/conf.d/xrdp.conf /etc/supervisor/conf.d/xrdp.conf
 RUN xrdp-keygen xrdp auto
